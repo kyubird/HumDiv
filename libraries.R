@@ -1,5 +1,6 @@
 
 #Statistical libraries
+
 library(stats4)
 library(xlsx)
 library(ggplot2)
@@ -25,6 +26,7 @@ library(tidyverse)
 library(dplyr)
 
 # Spatial libraries
+
 library(sp)
 library(maptools)
 library(ggmap)
