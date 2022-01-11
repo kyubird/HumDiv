@@ -204,7 +204,7 @@ env.cov$area = ifelse(env.cov$site == "3", 48,
 rm(cov.frag)
 
 
-##### Examining and transforming env. covariates ####
+##### D. Examining and transforming env. covariates ####
 
 # 1.  Making correlation matrices 
 round(cor(env.cov[,4:12]),2)
@@ -224,7 +224,7 @@ env.trans = env.cov %>%
 cor.chart2 = chart.Correlation(env.trans[,4:10], histogram=TRUE, pch=19)
 # Area and elevation are both still problems, but we'll probably leave them in.
 
-##### Centering and scaling habitat data #####
+##### E. Centering and scaling habitat data #####
 
 # There are a couple ways we can go about scaling and centering: (1) we can lump all data from all areas sampled together so everything is universally scaled and centered around a single point, or (2) we can do it independently for fragments, Bilsa, and Jama-Coaque. The former approach feels right to me, so that's what we'll go with.
 
@@ -235,7 +235,7 @@ colnames(env.trans.cs)
 env.trans.cs = env.trans.cs %>%
   dplyr::rename(site = env.trans.site, year = env.trans.year, site.year = env.trans.site.year)
 
-##### Creating species matrices for diversity analyses #####
+##### R. Creating species matrices for diversity analyses #####
 
 # Most diversity analyses will want species as columns or rows, with spatial/temporal units going in the opposite direction and each cell containing number of individuals captured. We'll aggregate this data at multiple levels to cover our bases for different analyses.
 
