@@ -1,4 +1,5 @@
-#3a.  Dealing with recaps. 
+
+#### Dealing with recaps ####
 
 # Birds can only be counted once per sampling period. 
 # If they were all banded, this would be easy because we could just remove every band number
@@ -25,17 +26,17 @@
 #(which will either be the day it was first banded 
 #or the first time a recap from a previous sampling period was recaught).
   
-# 3b. Checking to see what species are unbanded recaptures. 
+# 1. Checking to see what species are unbanded recaptures. 
 unbanded.recaps = fcat.hum %>% 
   filter(recap == "Y" & is.na(fcat.hum$band.number)) %>%
   group_by(species) %>%
   dplyr::summarize(n = length(species))
 # These are all hummingbirds (n=71) with one kingfisher. That means either Fercho wasn't clipping passerine tail feathers or he was and he never recaptured one (possible). This is worth considering since so many passerines went unbanded over the years, particularly in the fragments in 2015 when it seems they ran out of small bands.
 
-# 3c. Removing recaptured birds with no band number from the dataset (same ones as above).
+# 2. Removing recaptured birds with no band number from the dataset (same ones as above).
 fcat.hum = fcat.hum %>% filter(recap == "N" | banded == "Y")
 
-# 3d. If birds from previous sampling periods were never recaptured in later sampling periods, then we don't have to worry about accidentally removing them. Let's see what we're working with in terms of recaptures per specific site-year-sampling period combos.
+# 3. If birds from previous sampling periods were never recaptured in later sampling periods, then we don't have to worry about accidentally removing them. Let's see what we're working with in terms of recaptures per specific site-year-sampling period combos.
 reoccurring = fcat.hum %>% 
   filter(!is.na(band.number)) %>% 
   group_by(s.y.sp, band.number) %>% 
@@ -52,7 +53,7 @@ reoccurring2 = fcat.hum %>%
 # Getting rid of those since we won't need them again.
 rm(reoccurring, reoccurring2, unbanded.recaps)
 
-# 3e. Removing duplicate entries and the rest of the recaptures. This will take a couple steps. First, we'll split the dataset into banded and unbanded birds. Then we'll create unique IDs for the banded birds by band number and sampling period and call it a factor. We'll then create a new dataframe using just the levels of that factor since that will be equivalent to having one record of each banded individual per sampling period. This step wouldn't work for unbanded birds since there would be multiple individuals with the same unique ID, henche the splitting of the dataset Finally, we'll add the two dataframes (banded unique ID levels and unbanded birds) back together into a single dataframe.
+# 4. Removing duplicate entries and the rest of the recaptures. This will take a couple steps. First, we'll split the dataset into banded and unbanded birds. Then we'll create unique IDs for the banded birds by band number and sampling period and call it a factor. We'll then create a new dataframe using just the levels of that factor since that will be equivalent to having one record of each banded individual per sampling period. This step wouldn't work for unbanded birds since there would be multiple individuals with the same unique ID, henche the splitting of the dataset Finally, we'll add the two dataframes (banded unique ID levels and unbanded birds) back together into a single dataframe.
 
 unbanded = fcat.hum %>% filter(is.na(band.number)) # Unbanded birds. Remember, unbanded recaps have already been removed.
 banded = fcat.hum %>% filter(!is.na(band.number)) # Banded birds
@@ -82,10 +83,10 @@ rm(banded, good, unbanded)
 
 # More evidence that whole section went well: You can find bird XX860 is a recapture included after all the filtering. That's because it was first banded in 2010 but was recaptured during a different period in 2015. That's exactly what we were looking for.
 
-# 6.  Now that we're sure we've got all the right captures and none of the wrong ones in our dataframe, we can get rid of all the band info since it will just be clutter from here on out. Also, before we correct for unequal sampling effort, we can tally up species captures by date or sampling period. Let's do all that now.
+# 5.  Now that we're sure we've got all the right captures and none of the wrong ones in our dataframe, we can get rid of all the band info since it will just be clutter from here on out. Also, before we correct for unequal sampling effort, we can tally up species captures by date or sampling period. Let's do all that now.
 colnames(fcat.hum)
 fcat.hum = fcat.hum %>% 
   dplyr::select(site, forest, season, date, year, site.year, s.y.sp, species, banded, recap, hummer, family, guild, notes)
 
-# 7.  Adding a site_date column to match up with sampling effort below.
+# 6.  Adding a site_date column to match up with sampling effort below.
 fcat.hum$site.date = paste(fcat.hum$site, fcat.hum$date, sep = "_")

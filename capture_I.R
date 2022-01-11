@@ -1,13 +1,11 @@
 
-######## FCAT DATA PROCESSING
-
+##### Cleaning and organizing capture data #####
 # NOTE: 
 # Beware that environmental covariates dataframe is altered throughout. 
 # Therefore, all this code should be re-run for any change made to that dataframe to prevent future errors. 
 # Only using data from 2013-2017 accounting for year-to-year variation in sampling. 
 # e.g. Bilsa was heavily sampled in earlier years while fragments are not.
 
-##### Cleaning and organizing capture data #####
 
 # 1.  Reading in the capture data
 fcat.hum = read.csv(file = ".\\Captures_2004_2017_Final_(MSE).csv", na.strings=c(""," ","NA"))
