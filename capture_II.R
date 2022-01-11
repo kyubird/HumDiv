@@ -1,5 +1,5 @@
 
-#### Dealing with recaps ####
+#This code filters and organizes recaps. 
 
 # Birds can only be counted once per sampling period. 
 # If they were all banded, this would be easy because we could just remove every band number
@@ -25,7 +25,10 @@
 #in a sampling period after the first occurrence 
 #(which will either be the day it was first banded 
 #or the first time a recap from a previous sampling period was recaught).
-  
+
+
+#### Wrangling recaps ####
+
 # 1. Checking to see what species are unbanded recaptures. 
 unbanded.recaps = fcat.hum %>% 
   filter(recap == "Y" & is.na(fcat.hum$band.number)) %>%
