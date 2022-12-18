@@ -235,7 +235,7 @@ colnames(env.trans.cs)
 env.trans.cs = env.trans.cs %>%
   dplyr::rename(site = env.trans.site, year = env.trans.year, site.year = env.trans.site.year)
 
-##### R. Creating species matrices for diversity analyses #####
+##### F. Creating species matrices for diversity analyses #####
 
 # Most diversity analyses will want species as columns or rows, with spatial/temporal units going in the opposite direction and each cell containing number of individuals captured. We'll aggregate this data at multiple levels to cover our bases for different analyses.
 
